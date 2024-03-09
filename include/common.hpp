@@ -8,11 +8,14 @@ namespace smplx {
 using Tensor = torch::Tensor;
 using namespace torch::indexing;
 
-extern const std::map<std::string, std::map<std::string, int>> kVertexIds;
-using VertexIDsT = std::map<std::string, int>;
-extern const std::vector<std::string> JOINT_NAMES;
+extern const std::map<std::string, int> kSmplhVertexIds;
+extern const std::map<std::string, int> kSmplxVertexIds;
+extern const std::map<std::string, int> kManoVertexIds;
 
-extern const std::vector<std::string> SMPLH_JOINT_NAMES;
+using VertexIDsT = std::map<std::string, int>;
+extern const std::vector<std::string> kJointNames;
+
+extern const std::vector<std::string> kSmplhJointNames;
 } // namespace smplx
 
 #define ASSERT_MSG(cond, format, ...)                                          \

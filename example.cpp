@@ -4,12 +4,14 @@
 
 
 int main(int argc,char*argv[]) {
-    // auto t = torch::rand({689,3,10});
-
+    ASSERT_MSG(argc == 2, "please specify model file path");
     std::cout << argv[1] << std::endl;
     smplx::SMPL smpl(argv[1]);
 
     smpl.eval();
 
-    smpl.forward();
+    auto x = smpl.forward();
+
+    std::cout << x.betas.value() << "\n" << x.joints.value()<<"\n" << x.global_orient.value()<<std::endl;
+    return 0;
 }

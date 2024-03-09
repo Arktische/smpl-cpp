@@ -24,7 +24,7 @@ inline auto rot_mat_to_euler(Tensor &rot_mats) -> Tensor {
 
 inline auto transform_mat(Tensor &&R, Tensor &&t) -> Tensor {
     return torch::cat(
-        {torch::pad(R, {0, 0, 0, 1}), torch::pad(t, {0, 0, 0, 1})});
+        {torch::pad(R, {0, 0, 0, 1}), torch::pad(t, {0, 0, 0, 1},"constant",1)},2);
 }
 auto batch_rodrigues(Tensor &&rot_vecs, float epsilon = 1e-8) -> Tensor;
 auto batch_rigid_transform(Tensor &rot_mats, Tensor &joints, Tensor &parents,

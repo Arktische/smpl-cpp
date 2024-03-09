@@ -1,4 +1,5 @@
 #include "body_models.hpp"
+#include <memory>
 #include "common.hpp"
 #include "lbs.hpp"
 #include "utils.hpp"
@@ -7,7 +8,7 @@
 namespace smplx {
 
 auto SMPL::construct(const char *model_path) -> void {
-
+    vertex_joint_selector_ = std::make_unique<VertexJointSelector>(vars_.vertex_ids);
     ASSERT_MSG(std::filesystem::exists(model_path), "%s not exist", model_path);
 
     ASSERT_MSG(check_file_ext(model_path, "npz"), "invalid extension %s",
@@ -48,24 +49,24 @@ auto SMPL::construct(const char *model_path) -> void {
 
     if (!vars_.betas.has_value()) {
         vars_.betas.emplace(
-            torch::zeros({vars_.batch_size_, vars_.num_betas},
+            torch::zeros({vars_.batch_size, vars_.num_betas},
                          torch::dtype(vars_.dtype).requires_grad(true)));
     }
 
     if (!vars_.global_orient.has_value()) {
         vars_.global_orient.emplace(
-            torch::zeros({vars_.batch_size_, 3}, torch::dtype(vars_.dtype)));
+            torch::zeros({vars_.batch_size, 3}, torch::dtype(vars_.dtype)));
     }
 
     if (!vars_.body_pose.has_value()) {
         vars_.body_pose.emplace(
-            torch::zeros({vars_.batch_size_, NUM_BODY_JOINTS * 3},
+            torch::zeros({vars_.batch_size, NUM_BODY_JOINTS * 3},
                          torch::dtype(vars_.dtype)));
     }
 
     if (!vars_.transl.has_value()) {
         vars_.transl.emplace(
-            torch::zeros({vars_.batch_size_, 3}, torch::dtype(vars_.dtype)));
+            torch::zeros({vars_.batch_size, 3}, torch::dtype(vars_.dtype)));
     }
 
     v_template_ = torch::from_blob(data_struct_.at("v_template").data<float>(),
@@ -124,7 +125,7 @@ auto SMPL::forward_impl() -> SMPLOutput {
         vars_.betas.value(), full_pose, v_template_, shapedirs_, posedirs_,
         J_regressor_, parents_, lbs_weights_, vars_.pose2rot);
 
-    joints = vertex_joint_selector_.forward(vertices, joints);
+    joints = vertex_joint_selector_->forward(vertices, joints);
 
     if (vars_.joint_mapper.has_value() && !vars_.joint_mapper.has_value()) {
         joints = vars_.joint_mapper.value()(joints);

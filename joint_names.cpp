@@ -1,6 +1,6 @@
 #include "common.hpp"
 namespace smplx {
-const std::vector<std::string> JOINT_NAMES = {"pelvis",
+const std::vector<std::string> kJointNames = {"pelvis",
                                               "left_hip",
                                               "right_hip",
                                               "spine1",
@@ -145,7 +145,7 @@ const std::vector<std::string> JOINT_NAMES = {"pelvis",
                                               "left_contour_2",
                                               "left_contour_1"};
 
-const std::vector<std::string> SMPLH_JOINT_NAMES = {
+const std::vector<std::string> kSmplhJointNames = {
     "pelvis",        "left_hip",        "right_hip",      "spine1",
     "left_knee",     "right_knee",      "spine2",         "left_ankle",
     "right_ankle",   "spine3",          "left_foot",      "right_foot",

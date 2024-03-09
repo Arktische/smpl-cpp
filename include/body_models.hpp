@@ -26,11 +26,11 @@ struct option {
     std::optional<std::function<Tensor(Tensor &)>> joint_mapper{std::nullopt};
 
     int num_betas = 10;
-    int batch_size_ = 1;
+    int batch_size = 1;
     torch::ScalarType dtype = torch::kFloat32;
     std::string gender = "neutral";
     std::string age = "adult";
-    std::map<std::string, int> vertex_ids = kVertexIds.at("smplh");
+    const std::map<std::string, int>& vertex_ids = kSmplhVertexIds;
 
     std::optional<std::string> kid_template_path{std::nullopt};
 
@@ -40,25 +40,33 @@ struct option {
 };
 } // namespace internal
 
+// template<typename T>
+// auto gender(T&& gender ) {
+//     return [&gender](internal::option& opt) {
+//         opt.gender
+//     };
+// }
+
+
 template <typename T> auto transl(T &&transl) {
     return [&transl](internal::option &opt) { opt.transl.emplace(transl); };
 }
 
 template <typename T> auto body_pose(T &&body_pose) {
     return [&body_pose](internal::option &opt) {
-        opt.body_pose.emplace(body_pose);
+        opt.body_pose.emplace(std::forward<T>(body_pose));
     };
 }
 
 template <typename T> auto v_template(T &&v_template) {
     return [&v_template](internal::option &opt) {
-        opt.v_template.emplace(v_template);
+        opt.v_template.emplace(std::forward<T>(v_template));
     };
 }
 
 template <typename T> auto global_orient(T &&global_orient) {
     return [&global_orient](internal::option &opt) {
-        opt.global_orient.emplace(global_orient);
+        opt.global_orient.emplace(std::forward<T>(global_orient));
     };
 }
 
@@ -67,6 +75,14 @@ template <typename T> auto betas(T &&betas) {
         opt.betas.emplace(std::forward<T>(betas));
     };
 }
+
+inline auto batch_size(int batch_size) {
+    return [batch_size](internal::option &opt) {
+        opt.batch_size = batch_size;
+    };
+}
+
+
 
 using option = std::function<void(internal::option &)>;
 
@@ -124,7 +140,7 @@ class SMPL : public torch::nn::Module {
     Tensor lbs_weights_;
     Tensor parents_;
 
-    VertexJointSelector vertex_joint_selector_;
+    std::unique_ptr<VertexJointSelector> vertex_joint_selector_;
 };
 } // namespace smplx
 

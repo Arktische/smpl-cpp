@@ -12,12 +12,7 @@
 namespace smplx {
 class VertexJointSelector : public torch::nn::Module {
   private:
-    constexpr static char tip_names[10][8]{
-        "lthumb", "lindex", "lmiddle", "lring", "lpinky",
-        "rthumb", "rindex", "rmiddle", "rring", "rpinky"};
-
     Tensor extra_joints_idxs_;
-
   public:
     VertexJointSelector() = default;
     VertexJointSelector(const VertexIDsT &vertex_ids, bool use_hands = true,
