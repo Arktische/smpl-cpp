@@ -54,6 +54,7 @@ vertex_ids.cpp vertex_joint_selector.cpp \
 export LD_LIBRARY_PARH=$LD_LIBRARY_PATH:libtorch/lib:zlib/lib
 ```
 ## if you prefer to get static/dynamic library
+Modify `CMakeLists.txt` and change the `TORCH_DIR` to `/path/to/your/libtorch/share/cmake/Torch`.
 ```bash
 mkdir build && cd build
 cmake ../
