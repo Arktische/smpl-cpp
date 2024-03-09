@@ -140,7 +140,7 @@ auto SMPL::forward_impl() -> SMPLOutput {
     return {vars_.return_verts ? std::make_optional(vertices) : std::nullopt,
             joints,
             vars_.return_full_pose ? std::make_optional(full_pose)
-                                    : std::nullopt,
+                                   : std::nullopt,
             vars_.global_orient,
             vars_.betas,
             vars_.body_pose};

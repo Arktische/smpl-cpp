@@ -1,3 +1,4 @@
+
 #include "lbs.hpp"
 #include <cmath>
 #include <tuple>
@@ -33,20 +34,19 @@ auto batch_rodrigues(Tensor &&rot_vecs, float epsilon) -> Tensor {
 
     auto r = torch::split(rot_dir, 1, 1);
 
-    auto K = torch::zeros(
-        {batch_size, 3, 3},
-        torch::device(rot_vecs.device()).dtype(rot_vecs.dtype()));
-    auto zeros = torch::zeros(
-        {batch_size, 1},
-        torch::device(rot_vecs.device()).dtype(rot_vecs.dtype()));
+    auto K =
+        torch::zeros({batch_size, 3, 3},
+                     torch::device(rot_vecs.device()).dtype(rot_vecs.dtype()));
+    auto zeros =
+        torch::zeros({batch_size, 1},
+                     torch::device(rot_vecs.device()).dtype(rot_vecs.dtype()));
 
     K = torch::cat({zeros, -r[2], r[1], r[2], zeros, -r[0], -r[1], r[0], zeros},
                    1)
             .view({batch_size, 3, 3});
 
     auto ident =
-        torch::eye(3,
-                   torch::device(rot_vecs.device()).dtype(rot_vecs.dtype()))
+        torch::eye(3, torch::device(rot_vecs.device()).dtype(rot_vecs.dtype()))
             .unsqueeze(0);
 
     auto rot_mat = ident + sin * K + (1 - cos) * torch::bmm(K, K);

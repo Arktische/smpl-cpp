@@ -24,13 +24,9 @@ extern const std::vector<std::string> SMPLH_JOINT_NAMES;
         }                                                                      \
     } while (0)
 
-template<typename T>
-T mmax(T v) {
-    return v;
-}
+template <typename T> T mmax(T v) { return v; }
 
-template<typename T, typename ...Args>
-T mmax(T v, Args... args) {
-    return std::max(v,mmax(args...));
+template <typename T, typename... Args> T mmax(T v, Args... args) {
+    return std::max(v, mmax(args...));
 }
 #endif

@@ -19,7 +19,7 @@ class VertexJointSelector : public torch::nn::Module {
     Tensor extra_joints_idxs_;
 
   public:
-    VertexJointSelector() =default;
+    VertexJointSelector() = default;
     VertexJointSelector(const VertexIDsT &vertex_ids, bool use_hands = true,
                         bool use_feet_keypoints = true);
 

@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 project(smplx)
+
+include_directories(./include)
 set(TORCH_DIR /path/to/your/libtorch/share/cmake/Torch)
 find_package(Torch REQUIRED)
 find_package(ZLIB REQUIRED)
