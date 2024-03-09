@@ -1,6 +1,10 @@
-# smplx-cpp
+# smpl-cpp
 
-A 100% compatiable C++ implemention for python package smplx. Easy to use and integrate into any pytorch/libtorch workflow.
+A 100% compatiable C++ implemention for python package [smplx](https://github.com/vchoutas/smplx). Easy to use and integrate into any pytorch/libtorch workflow.
+Original smplx website: https://smpl-x.is.tue.mpg.de/
+
+# SMPL,SMPL-H,SMPL-X model
+See [here](models.md)
 
 # dependencies
 * `libtorch` provides tensor computation and network definition. if you prefer running on Nvidia GPU, please download CUDA version liborch
