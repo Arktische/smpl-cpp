@@ -1,10 +1,13 @@
 # smpl-cpp
 
-A 100% compatiable C++ implemention for python package [smplx](https://github.com/vchoutas/smplx). Easy to use and integrate into any pytorch/libtorch workflow.
-Original smplx website: https://smpl-x.is.tue.mpg.de/
+A 100% compatiable C++ implemention for python package [smplx](https://github.com/vchoutas/smplx). Easy to use and integrate into any pytorch/libtorch workflow. Original SMPL project can be found on [this website](https://smpl-x.is.tue.mpg.de/)
 
-# SMPL,SMPL-H,SMPL-X model
+# Fetch SMPL,SMPL-H,SMPL-X model
 See [here](models.md)
+1. if you are using SMPL, you should convert `SMPL_*.pkl` to `.npz` format by using provided python script.
+```bash
+python pkl2npz.py /path/to/SMPL_*.pkl ...
+```
 
 # dependencies
 * `libtorch` provides tensor computation and network definition. if you prefer running on Nvidia GPU, please download CUDA version liborch
@@ -49,19 +52,5 @@ vertex_joint_selector.cpp \
 export LD_LIBRARY_PARH=$LD_LIBRARY_PATH:libtorch/lib:zlib/lib
 ```
 
-# usage
-1. if you are using SMPL, you should convert `SMPL_*.pkl` to `.npz` format by using provided python script.
-```bash
-python pkl2npz.py /path/to/SMPL_*.pkl ...
-```
-
-2. c++ examples
-
-```cpp
-#include "smplx.hpp"
-
-int main() {
-  
-}
-
-```
+# usage(*WIP*)
+It has the same api with python package smplx.
