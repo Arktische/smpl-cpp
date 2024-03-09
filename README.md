@@ -26,12 +26,14 @@ conda install zlib
 # build
 `smplx-cpp` is easy to build and integrate, just add zlib and libtorch include directories and link libraries. 
 
-if you have installed libtorch and zlib in other paths. plz modify corresponding path in commands below 
-
+> if you have installed libtorch and zlib in other paths. plz modify corresponding path in commands below 
+## if you prefer to compile with source files
 **CUDA version**
 
 ```bash
-g++ -o a.out -std=c++17 <your_source_file_here> bodymodel.cpp joint_names.cpp lbs.cpp npyio.cpp vertex_ids.cpp \
+g++ -o a.out -std=c++17 <your_source_file_here> \
+body_models.cpp joint_names.cpp lbs.cpp npyio.cpp \
+vertex_ids.cpp vertex_joint_selector.cpp \
 -Ilibtorch/include -Ilibtorch/include/torchcsrc/api/include -Izlib/include \
 -Llibtorch/lib -Lzlib/lib \
 -lz -lc10  -lc10_cuda -ltorch -ltorch_cpu -ltorch_cuda
@@ -42,14 +44,20 @@ export LD_LIBRARY_PARH=$LD_LIBRARY_PATH:libtorch/lib:zlib/lib
 **CPU version**
 
 ```bash
-g++ -o a.out -std=c++17 <your_source_file_here> body_models.cpp joint_names.cpp \
-lbs.cpp npyio.cpp vertex_ids.cpp \
-vertex_joint_selector.cpp \
+g++ -o a.out -std=c++17 <your_source_file_here> \
+body_models.cpp joint_names.cpp lbs.cpp npyio.cpp \
+vertex_ids.cpp vertex_joint_selector.cpp \
 -Ilibtorch/include -Ilibtorch/include/torchcsrc/api/include -Izlib/include \
 -Llibtorch/lib -Lzlib/lib \
 -lz -lc10 -ltorch -ltorch_cpu
 
 export LD_LIBRARY_PARH=$LD_LIBRARY_PATH:libtorch/lib:zlib/lib
+```
+## if you prefer to get static/dynamic library
+```bash
+mkdir build && cd build
+cmake ../
+make
 ```
 
 # usage(*WIP*)
