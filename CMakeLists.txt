@@ -6,7 +6,7 @@ find_package(ZLIB REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
 
 add_library(smplx SHARED bodymodel.cpp joint_names.cpp lbs.cpp npyio.cpp vertex_ids.cpp)
-target_link_libraries(smplx "${TORCH_LIBRARIES}" ${ZLIB_LIBRARIES})
+target_link_libraries(smplx "${TORCH_LIBRARIES}" ZLIB::ZLIB)
 set_property(TARGET smplx PROPERTY CXX_STANDARD 17)
 
 # The following code block is suggested to be used on Windows.
