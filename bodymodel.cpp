@@ -152,16 +152,13 @@ auto SMPL::forward(fwd_option &&opt) -> SMPLOutput {
     joints += transl_.unsqueeze(1);
     vertices += transl_.unsqueeze(1);
 
-    return SMPLOutput{
-        .vertices =
-            opt.return_verts_ ? std::make_optional(vertices) : std::nullopt,
-        .joints = joints,
-        .full_pose = opt.return_full_pose_ ? std::make_optional(full_pose)
-                                           : std::nullopt,
-        .global_orient = global_orient_,
-        .betas = betas_,
-        .body_pose = body_pose_,
-    };
+    return {
+        opt.return_verts_ ? std::make_optional(vertices) : std::nullopt,
+        joints,
+        opt.return_full_pose_ ? std::make_optional(full_pose) : std::nullopt,
+        global_orient_,
+        betas_,
+        body_pose_};
 }
 
 } // namespace smplx

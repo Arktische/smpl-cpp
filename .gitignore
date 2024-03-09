@@ -1,0 +1,14 @@
+*.obj
+*.dll
+*.lib
+*.a
+*.out
+*.exp
+*.bin
+*.exe
+*.so
+*.o
+build/
+.vscode/
+.vs/
+.idea/
