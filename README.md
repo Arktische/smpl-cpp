@@ -32,7 +32,7 @@ if you have installed libtorch and zlib in other paths. plz modify corresponding
 CUDA version
 
 ```bash
-g++ -o a.out <your_source_file_here> bodymodel.cpp joint_names.cpp lbs.cpp npyio.cpp vertex_ids.cpp \
+g++ -o a.out -std=c++17 <your_source_file_here> bodymodel.cpp joint_names.cpp lbs.cpp npyio.cpp vertex_ids.cpp \
 -Ilibtorch/include -Ilibtorch/include/torchcsrc/api/include -Izlib/include \
 -Llibtorch/lib -Lzlib/lib \
 -lz -lc10_cuda -ltorch_cuda
@@ -43,7 +43,7 @@ export LD_LIBRARY_PARH=$LD_LIBRARY_PATH:libtorch/lib:zlib/lib
 CPU version
 
 ```bash
-g++ -o a.out <your_source_file_here> bodymodel.cpp joint_names.cpp lbs.cpp npyio.cpp vertex_ids.cpp \
+g++ -o a.out -std=c++17 <your_source_file_here> bodymodel.cpp joint_names.cpp lbs.cpp npyio.cpp vertex_ids.cpp \
 -Ilibtorch/include -Ilibtorch/include/torchcsrc/api/include -Izlib/include \
 -Llibtorch/lib -Lzlib/lib \
 -lz -lc10_cpu -ltorch_cpu
