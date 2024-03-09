@@ -3,16 +3,8 @@
 A 100% compatiable C++ implemention for python package smplx. Easy to use and integrate into any pytorch/libtorch workflow.
 
 # dependencies
-* `libtorch` provides tensor computation and network definition. if you prefer running on Nvidia GPU, please download CUDA version libtorch.
-
-    Here is the direct link for libtorch2.2.1+cuda11.8. Other versions can be downloaded from https://pytorch.org/
-
-    >Download here (Release version):
-https://download.pytorch.org/libtorch/cu118/libtorch-win-shared-with-deps-2.2.1%2Bcu118.zip
-
-    >Download here (Debug version):
-https://download.pytorch.org/libtorch/cu118/libtorch-win-shared-with-deps-debug-2.2.1%2Bcu118.zip
-
+* `libtorch` provides tensor computation and network definition. if you prefer running on Nvidia GPU, please download CUDA version liborch
+  you can choose libtorch version according to your environgment from https://pytorch.org/get-started/locally/
 * `zlib` for read `.npz` file
 ```bash
 apt install zlib1g-dev
