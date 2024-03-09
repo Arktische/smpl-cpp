@@ -19,7 +19,11 @@ apt install zlib1g-dev
 conda install zlib
 ```
 
-* compiler supports C++17 standards.
+* compiler supports C++17 standards
+  * mingw64 on Windows not supported due to incompatiable ABI
+  * vc141, vc142, vc143 are tested (correspoding to Visual Studio 2017/2019/2022)
+  * gcc > 8.0 tested
+  * clang > 5.0 in theory (not tested yet)
 
 
 
@@ -27,12 +31,13 @@ conda install zlib
 If you have installed libtorch and zlib in other paths, please modify corresponding path in commands below 
 
 ## Compile with source files
+Make sure your current work directory is project root.
 **CUDA version**
 
 ```bash
 g++ -o a.out -std=c++17 <your_source_file_here> \
 body_models.cpp joint_names.cpp lbs.cpp npyio.cpp \
-vertex_ids.cpp vertex_joint_selector.cpp \
+vertex_ids.cpp vertex_joint_selector.cpp -Iinclude\
 -Ilibtorch/include -Ilibtorch/include/torchcsrc/api/include -Izlib/include \
 -Llibtorch/lib -Lzlib/lib \
 -lz -lc10  -lc10_cuda -ltorch -ltorch_cpu -ltorch_cuda
@@ -45,7 +50,7 @@ export LD_LIBRARY_PARH=$LD_LIBRARY_PATH:libtorch/lib:zlib/lib
 ```bash
 g++ -o a.out -std=c++17 <your_source_file_here> \
 body_models.cpp joint_names.cpp lbs.cpp npyio.cpp \
-vertex_ids.cpp vertex_joint_selector.cpp \
+vertex_ids.cpp vertex_joint_selector.cpp -Iinclude\
 -Ilibtorch/include -Ilibtorch/include/torchcsrc/api/include -Izlib/include \
 -Llibtorch/lib -Lzlib/lib \
 -lz -lc10 -ltorch -ltorch_cpu
