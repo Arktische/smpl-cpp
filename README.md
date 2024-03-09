@@ -1,6 +1,6 @@
 # smplx-cpp
 
-A 100% compatiable C++ port for python package smplx. Easu to use and integrate into any pytorch/libtorch workflow.
+A 100% compatiable C++ implemention for python package smplx. Easy to use and integrate into any pytorch/libtorch workflow.
 
 # dependencies
 * `libtorch` provides tensor computation and network definition. if you prefer running on Nvidia GPU, please download CUDA version libtorch.
