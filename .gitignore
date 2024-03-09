@@ -13,3 +13,7 @@ build/
 .vs/
 .idea/
 test_*.cpp
+*.pdb
+*.npz
+*.npy
+*.pkl

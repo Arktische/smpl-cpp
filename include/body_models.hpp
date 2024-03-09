@@ -71,10 +71,10 @@ template <typename T> auto betas(T &&betas) {
 using option = std::function<void(internal::option &)>;
 
 template <typename T, typename... Args>
-inline void unpack_option(internal::option &opt, T&& f, Args&&... args) {
+inline void apply_option(internal::option &opt, T&& f, Args&&... args) {
     f(opt);
     if constexpr (sizeof...(Args) > 0) {
-        unpack_option(opt, args...);
+        apply_option(opt, args...);
     }
 }
 
@@ -89,7 +89,9 @@ class SMPL : public torch::nn::Module {
     SMPL() = delete;
 
     template <typename... Args> SMPL(const char *model_path, Args &&...args) {
-        unpack_option(vars_, args...);
+        if constexpr (sizeof...(Args) > 0) {
+            apply_option(vars_, args...);
+        }
         construct(model_path);
     }
 
@@ -102,7 +104,9 @@ class SMPL : public torch::nn::Module {
     auto num_faces() -> int { return faces_.size(0); }
 
     template <typename... Args> auto forward(Args &&...args) -> SMPLOutput {
-        unpack_option(vars_, args...);
+        if constexpr (sizeof...(Args) > 0) {
+            apply_option(vars_, args...);
+        }
         return forward_impl();
     }
 

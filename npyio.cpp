@@ -1,5 +1,5 @@
 #include "npyio.hpp"
-#include <stdint.h>
+#include <cstdint>
 #include <complex>
 #include <cstdlib>
 #include <cstring>
@@ -227,9 +227,9 @@ NpyArray load_the_npz_array(FILE *fp, uint32_t compr_bytes,
     int err;
     z_stream d_stream;
 
-    // d_stream.zalloc = Z_NULL;
-    // d_stream.zfree = Z_NULL;
-    // d_stream.opaque = Z_NULL;
+    d_stream.zalloc = Z_NULL;
+    d_stream.zfree = Z_NULL;
+    d_stream.opaque = Z_NULL;
     d_stream.avail_in = 0;
     d_stream.next_in = nullptr;
     err = inflateInit2(&d_stream, -MAX_WBITS);

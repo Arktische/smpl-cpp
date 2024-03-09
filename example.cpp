@@ -3,11 +3,13 @@
 #include "smplx.hpp"
 
 
-int main() {
-    auto t = torch::rand({689,3,10});
-    smplx::SMPL smpl("/path/to/npz",smplx::betas(t));
+int main(int argc,char*argv[]) {
+    // auto t = torch::rand({689,3,10});
+
+    std::cout << argv[1] << std::endl;
+    smplx::SMPL smpl(argv[1]);
 
     smpl.eval();
 
-    smpl.forward(smplx::body_pose(t),smplx::betas(t));
+    smpl.forward();
 }

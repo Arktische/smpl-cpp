@@ -1,7 +1,7 @@
 #ifndef NPYIO_HPP
 #define NPYIO_HPP
 
-#include <stdint.h>
+#include <cstdint>
 #include <cassert>
 #include <cstdio>
 #include <iostream>
