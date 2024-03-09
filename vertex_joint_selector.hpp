@@ -19,47 +19,11 @@ class VertexJointSelector : public torch::nn::Module {
     Tensor extra_joints_idxs_;
 
   public:
-    VertexJointSelector() = delete;
+    VertexJointSelector() =default;
     VertexJointSelector(const VertexIDsT &vertex_ids, bool use_hands = true,
-                        bool use_feet_keypoints = true) {
-        Tensor extra_joints_idxs;
+                        bool use_feet_keypoints = true);
 
-        auto face_keyp_idxs = torch::tensor(
-            {vertex_ids.at("nose"), vertex_ids.at("reye"), vertex_ids.at("leye"),
-             vertex_ids.at("rear"), vertex_ids.at("lear")},
-            TensorOpt().dtype(torch::kInt64));
-
-        extra_joints_idxs = torch::cat({extra_joints_idxs, face_keyp_idxs});
-
-        if (use_feet_keypoints) {
-            auto feet_keyp_idxs =
-                torch::tensor({vertex_ids.at("LBigToe"), vertex_ids.at("LSmallToe"),
-                               vertex_ids.at("LHeel"), vertex_ids.at("RBigToe"),
-                               vertex_ids.at("RSmallToe"), vertex_ids.at("RHeel")},
-                              TensorOpt().dtype(torch::kInt32));
-            extra_joints_idxs =
-                torch::cat({extra_joints_idxs, feet_keyp_idxs});
-        }
-
-        if (use_hands) {
-            std::vector<int> tip_idxs(10);
-            for (auto str : tip_names) {
-                tip_idxs.emplace_back(vertex_ids.at(str));
-            }
-
-            extra_joints_idxs = torch::cat(
-                {extra_joints_idxs, torch::from_blob(tip_idxs.data(), {10})});
-        }
-
-        extra_joints_idxs_ =
-            register_parameter("extra_joints_idxs", extra_joints_idxs);
-    }
-
-    torch::Tensor forward(Tensor &vertices, Tensor &joints) {
-        auto extra_joints = torch::index_select(vertices, 1, extra_joints_idxs_);
-
-        return torch::cat({joints, extra_joints}, 1);
-    }
+    auto forward(Tensor &vertices, Tensor &joints) -> Tensor;
 };
 } // namespace smplx
 #endif

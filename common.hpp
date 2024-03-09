@@ -3,11 +3,7 @@
 #include <map>
 #include <string>
 #include <vector>
-#include "c10/core/TensorOptions.h"
-#include "torch/nn/functional.h"
 #include "torch/torch.h"
-using TensorOpt = torch::TensorOptions;
-
 namespace smplx {
 using Tensor = torch::Tensor;
 using namespace torch::indexing;

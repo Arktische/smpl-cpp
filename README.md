@@ -39,7 +39,9 @@ export LD_LIBRARY_PARH=$LD_LIBRARY_PATH:libtorch/lib:zlib/lib
 **CPU version**
 
 ```bash
-g++ -o a.out -std=c++17 <your_source_file_here> bodymodel.cpp joint_names.cpp lbs.cpp npyio.cpp vertex_ids.cpp \
+g++ -o a.out -std=c++17 <your_source_file_here> body_models.cpp joint_names.cpp \
+lbs.cpp npyio.cpp vertex_ids.cpp \
+vertex_joint_selector.cpp \
 -Ilibtorch/include -Ilibtorch/include/torchcsrc/api/include -Izlib/include \
 -Llibtorch/lib -Lzlib/lib \
 -lz -lc10 -ltorch -ltorch_cpu
@@ -47,3 +49,19 @@ g++ -o a.out -std=c++17 <your_source_file_here> bodymodel.cpp joint_names.cpp lb
 export LD_LIBRARY_PARH=$LD_LIBRARY_PATH:libtorch/lib:zlib/lib
 ```
 
+# usage
+1. if you are using SMPL, you should convert `SMPL_*.pkl` to `.npz` format by using provided python script.
+```bash
+python pkl2npz.py /path/to/SMPL_*.pkl ...
+```
+
+2. c++ examples
+
+```cpp
+#include "smplx.hpp"
+
+int main() {
+  
+}
+
+```

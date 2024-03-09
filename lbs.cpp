@@ -35,10 +35,10 @@ auto batch_rodrigues(Tensor &&rot_vecs, float epsilon) -> Tensor {
 
     auto K = torch::zeros(
         {batch_size, 3, 3},
-        TensorOpt().device(rot_vecs.device()).dtype(rot_vecs.dtype()));
+        torch::device(rot_vecs.device()).dtype(rot_vecs.dtype()));
     auto zeros = torch::zeros(
         {batch_size, 1},
-        TensorOpt().device(rot_vecs.device()).dtype(rot_vecs.dtype()));
+        torch::device(rot_vecs.device()).dtype(rot_vecs.dtype()));
 
     K = torch::cat({zeros, -r[2], r[1], r[2], zeros, -r[0], -r[1], r[0], zeros},
                    1)
@@ -46,7 +46,7 @@ auto batch_rodrigues(Tensor &&rot_vecs, float epsilon) -> Tensor {
 
     auto ident =
         torch::eye(3,
-                   TensorOpt().device(rot_vecs.device()).dtype(rot_vecs.dtype()))
+                   torch::device(rot_vecs.device()).dtype(rot_vecs.dtype()))
             .unsqueeze(0);
 
     auto rot_mat = ident + sin * K + (1 - cos) * torch::bmm(K, K);
@@ -103,7 +103,7 @@ auto lbs(Tensor &betas, Tensor &pose, Tensor &v_template, Tensor &shapedirs,
     auto J = vertices2joints(J_regressor, v_shaped);
 
     auto ident =
-        torch::eye(3, TensorOpt().device(betas.device()).dtype(betas.dtype()));
+        torch::eye(3, torch::device(betas.device()).dtype(betas.dtype()));
 
     Tensor pose_offsets, rot_mats;
     if (pose2rot) {
@@ -141,7 +141,7 @@ auto lbs(Tensor &betas, Tensor &pose, Tensor &v_template, Tensor &shapedirs,
 
     auto homogen_coord =
         torch::ones({batch_size, v_posed.size(1), 1},
-                    TensorOpt().device(betas.device()).dtype(betas.dtype()));
+                    torch::device(betas.device()).dtype(betas.dtype()));
 
     auto v_posed_homo = torch::cat({v_posed, homogen_coord}, 2);
 
@@ -163,7 +163,7 @@ auto vertices2landmarks(Tensor &vertices, Tensor &faces, Tensor &lmk_faces_idx,
                          .view({batch_size, -1, 3});
 
     lmk_faces +=
-        torch::arange(batch_size, TensorOpt().device(device).dtype(torch::kLong))
+        torch::arange(batch_size, torch::device(device).dtype(torch::kLong))
             .view({-1, 1, 1}) *
         num_verts;
 
@@ -189,7 +189,7 @@ auto find_dynamic_lmk_idx_and_bcoords(
             pose.view({batch_size, -1, 3}), 1,
             torch::from_blob(neck_kin_chain.data(),
                              {static_cast<long long>(neck_kin_chain.size())},
-                             TensorOpt().dtype(torch::kInt)));
+                             torch::dtype(torch::kInt)));
         rot_mats =
             batch_rodrigues(aa_pose.view({-1, 3})).view({batch_size, -1, 3, 3});
     } else {
@@ -197,11 +197,11 @@ auto find_dynamic_lmk_idx_and_bcoords(
             pose.view({batch_size, -1, 3, 3}), 1,
             torch::from_blob(neck_kin_chain.data(),
                              {static_cast<long long>(neck_kin_chain.size())},
-                             TensorOpt().dtype(torch::kInt)));
+                             torch::dtype(torch::kInt)));
     }
 
     auto rel_rot_mat =
-        torch::eye(3, TensorOpt().device(vertices.device()).dtype(dtype))
+        torch::eye(3, torch::device(vertices.device()).dtype(dtype))
             .unsqueeze_(0)
             .repeat({batch_size, 1, 1});
 
@@ -213,10 +213,10 @@ auto find_dynamic_lmk_idx_and_bcoords(
     auto y_rot_angle =
         torch::round(
             torch::clamp(-rot_mat_to_euler(rel_rot_mat) * 180.0 / M_PI, {}, 39))
-            .to(TensorOpt().dtype(torch::kLong));
+            .to(torch::dtype(torch::kLong));
 
-    auto neg_mask = y_rot_angle.lt(0).to(TensorOpt().dtype(torch::kLong));
-    auto mask = y_rot_angle.lt(-39).to(TensorOpt().dtype(torch::kLong));
+    auto neg_mask = y_rot_angle.lt(0).to(torch::dtype(torch::kLong));
+    auto mask = y_rot_angle.lt(-39).to(torch::dtype(torch::kLong));
     auto neg_vals = mask * 78 + (1 - mask) * (39 - y_rot_angle);
 
     y_rot_angle = (neg_mask * neg_vals + (1 - neg_mask) * y_rot_angle);
