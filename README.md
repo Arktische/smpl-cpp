@@ -42,7 +42,7 @@ vertex_ids.cpp vertex_joint_selector.cpp -Iinclude\
 -Llibtorch/lib -Lzlib/lib \
 -lz -lc10  -lc10_cuda -ltorch -ltorch_cpu -ltorch_cuda
 
-export LD_LIBRARY_PARH=$LD_LIBRARY_PATH:libtorch/lib:zlib/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:libtorch/lib:zlib/lib
 ```
 
 **CPU version**
@@ -55,7 +55,7 @@ vertex_ids.cpp vertex_joint_selector.cpp -Iinclude\
 -Llibtorch/lib -Lzlib/lib \
 -lz -lc10 -ltorch -ltorch_cpu
 
-export LD_LIBRARY_PARH=$LD_LIBRARY_PATH:libtorch/lib:zlib/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:libtorch/lib:zlib/lib
 ```
 ## Static and dynamic library
 Modify `CMakeLists.txt` and change the `TORCH_DIR` to `/path/to/your/libtorch/share/cmake/Torch`.
